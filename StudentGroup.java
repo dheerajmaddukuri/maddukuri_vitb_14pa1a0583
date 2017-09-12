@@ -14,7 +14,8 @@ import java.util.Date;
 public class StudentGroup implements StudentArrayOperation {
 
 	private Student[] students;
-	
+	private Student[] dates;
+	private int index = 0;
 	/**
 	 * DO NOT remove or change this constructor, it will be used during task check
 	 * @param length
@@ -48,14 +49,12 @@ public class StudentGroup implements StudentArrayOperation {
 		try {
 			if((index < 0) || (index >= students.length))
 				throw new IllegalArgumentException();
-			else
-				return students[index];
 		}
 		catch(IllegalArgumentException ie)
 		{
 			System.out.println("the Array Inex out of bounds.");
 		}
-		
+		return students[index];
 	}
 
 	@Override
@@ -293,6 +292,10 @@ public class StudentGroup implements StudentArrayOperation {
 					}
 				}
 				students.length = j + 1;
+				/*ArrayList<Element> arrayList = new ArrayList<Element>(Arrays.asList(array));
+				for(int j =0;j<arrlist.size();j++){
+					  array[j] = arrlist.get(j);
+					}*/
 			}
 		}
 		catch(IllegalArgumentException ie)
@@ -326,32 +329,91 @@ public class StudentGroup implements StudentArrayOperation {
 	@Override
 	public Student[] getByBirthDate(Date date) {
 		// Add your implementation here
+		Date stdbd;
 		try {
 			if(date == null)
 				throw new IllegalArgumentException();
+			else
+			{
+				for(int i = 0; i < students.length; i++)
+				{
+					stdbd = students[i].getBirthDate();
+					if((stdbd.before(date)) || (stdbd.equals(date)))
+					{
+						dates[index++] = students[i];
+					}
+						
+				}
+			}
 		}
 		catch(IllegalArgumentException ie)
 		{
 			System.out.println("An Illegal Argument Exception has occured.");
 		}
-		return null;
+		return dates;
 	}
 
 	@Override
 	public Student[] getBetweenBirthDates(Date firstDate, Date lastDate) {
 		// Add your implementation here
-		return null;
+		Date stdbd;
+		try {
+			if((firstDate == null) || (lastDate == null))
+				throw new IllegalArgumentException();
+			else
+			{
+				for(int i = 0; i < students.length; i++)
+				{
+					stdbd = students[i].getBirthDate();
+					if(((stdbd.after(firstDate)) && (stdbd.before(lastDate)))|| (stdbd.equals(firstDate)) || stdbd.equals(lastDate))
+					{
+						dates[index++] = students[i];
+					}
+						
+				}
+			}
+		}
+		catch(IllegalArgumentException ie)
+		{
+			System.out.println("An Illegal Argument Exception has occured.");
+		}
+		return dates;
 	}
+
 
 	@Override
 	public Student[] getNearBirthDate(Date date, int days) {
 		// Add your implementation here
+		Date stdbd,lastDate;
+		lastDate = date + days;
+		try {
+			if(date == null)
+				throw new IllegalArgumentException();
+			else
+			{
+				for(int i = 0; i < students.length; i++)
+				{
+					stdbd = students[i].getBirthDate();
+					if((stdbd.before(date)) || (stdbd.equals(date)))
+					{
+						dates[index++] = students[i];
+					}
+						
+				}
+			}
+		}
+		catch(IllegalArgumentException ie)
+		{
+			System.out.println("An Illegal Argument Exception has occured.");
+		}
+		return dates;
 		return null;
 	}
 
 	@Override
 	public int getCurrentAgeByDate(int indexOfStudent) {
 		// Add your implementation here
+		students[indexOfStudent]
 		return 0;
 	}
 
@@ -370,6 +432,25 @@ public class StudentGroup implements StudentArrayOperation {
 	@Override
 	public Student getNextStudent(Student student) {
 		// Add your implementation here
-		return null;
+		Student std;
+		int i = 0;
+		try {
+			for(i = 0; i< students.length; i++)
+			{
+				if(students[i].equals(student))
+				{
+					if(i == students.length)
+					{
+						throw new IllegalArgumentException();
+					}
+					break;
+				}
+			}
+		}
+		catch(IllegalArgumentException ie)
+		{
+			System.out.println("An Illegal Argument Exception has occured.");
+		}
+		return students[i+1];
 	}
 }
