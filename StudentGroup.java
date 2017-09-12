@@ -15,7 +15,8 @@ public class StudentGroup implements StudentArrayOperation {
 
 	private Student[] students;
 	private Student[] dates;
-	private int index = 0;
+	private int index = 0,avgIndex = 0;
+	private Student[] avgMarks;
 	/**
 	 * DO NOT remove or change this constructor, it will be used during task check
 	 * @param length
@@ -413,7 +414,7 @@ public class StudentGroup implements StudentArrayOperation {
 	@Override
 	public int getCurrentAgeByDate(int indexOfStudent) {
 		// Add your implementation here
-		students[indexOfStudent]
+		
 		return 0;
 	}
 
@@ -426,8 +427,35 @@ public class StudentGroup implements StudentArrayOperation {
 	@Override
 	public Student[] getStudentsWithMaxAvgMark() {
 		// Add your implementation here
-		return null;
+		Student std;
+		int i = 0;
+		double max = 0;
+		double avg;
+		try {
+			for(i = 0; i< students.length; i++)
+			{
+				avg = students[i].getAvgMark();
+				if(max < avg)
+				{
+					max = avg;
+				}
+			}
+			for(i = 0; i< students.length; i++)
+			{
+				avg = students[i].getAvgMark();
+				if(max == avg)
+				{
+					avgMarks[avgIndex++] = students[i];
+				}
+			}
+		}
+		catch(IllegalArgumentException ie)
+		{
+			System.out.println("An Illegal Argument Exception has occured.");
+		}
+		return avgMarks;
 	}
+		
 
 	@Override
 	public Student getNextStudent(Student student) {
